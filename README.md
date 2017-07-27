@@ -29,6 +29,10 @@ Modified to support POST flooding and replacing the REPLACE value in GET and POS
             Destination site. (default "http://localhost")
       -verb string
             The HTTP verb to use (default "GET")
+            
+## Building
+
+    $ go build -ldflags "-w -s" hulk.go
 
 This tool targeted for stress testing and may really down badly configured server or badly made app. Use it carefully.
 
