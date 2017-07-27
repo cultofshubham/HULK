@@ -11,6 +11,25 @@ hulk.go just uses lightweight goroutines that used only tens of threads (commonl
 CPU core + several service threads). This architecture allows golang version better consume resources and got much higher 
 connection pool on the same hardware than Python version can.
 
+## Additional changes
+Modified to support POST flooding and replacing the REPLACE value in GET and POST requests by random values
+
+    $ hulk -h
+
+    Usage of hulk:
+      -agents string
+            Get the list of user-agent lines from a file. By default the predefined list of useragents used.
+      -bodyType string
+            Value of the Content-Type header when using POST requests
+      -data string
+            Data to be sent when using POST requests
+      -safe
+            Autoshut after dos.
+      -site string
+            Destination site. (default "http://localhost")
+      -verb string
+            The HTTP verb to use (default "GET")
+
 This tool targeted for stress testing and may really down badly configured server or badly made app. Use it carefully.
 
 Examples:
@@ -18,6 +37,10 @@ Examples:
     $ hulk -site http://example.com/test/ 2>/dev/null
 
     $ HULKMAXPROCS=4096 hulk -site http://example.com 2>/tmp/errlog
+    
+    $ hulk -site http://example.com/?q=REPLACE # REPLACE will be replaced with random value
+    
+    $ hulk -site http://example.com/ -verb POST -bodyType application/json -data '{"query":"REPLACE"}'
 
 Useful environment vars:
 
